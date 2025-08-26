@@ -6,7 +6,8 @@
 <PageTitle>Students</PageTitle>
 
 <div class="mb-3">
-    <input class="form-control" placeholder="Search name or email..." @bind-value="_search" @bind-value:event="oninput" />
+    <input class="form-control" placeholder="Search name or email..."
+       @bind-value="_search" @oninput="OnSearchInput" />
 </div>
 
 <div class="mb-3">
@@ -137,4 +138,11 @@
         await StudentService.DeleteAsync(id);
         await LoadAsync();
     }
+
+    private async Task OnSearchInput(ChangeEventArgs e)
+    {
+        _search = e.Value?.ToString();
+        await LoadAsync();
+    }
+
 }
