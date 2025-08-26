@@ -5,6 +5,41 @@
 
 <PageTitle>Students</PageTitle>
 
+<div class="mb-3">
+    <input class="form-control" placeholder="Search name or email..." @bind-value="_search" @bind-value:event="oninput" />
+</div>
+
+<div class="mb-3">
+    <EditForm Model="_edit" OnValidSubmit="SaveAsync">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+        <div class="row g-2">
+            <div class="col-md-3">
+                <InputText class="form-control" @bind-Value="_edit.FirstName" placeholder="First name" />
+            </div>
+            <div class="col-md-3">
+                <InputText class="form-control" @bind-Value="_edit.LastName" placeholder="Last name" />
+            </div>
+            <div class="col-md-4">
+                <InputText class="form-control" @bind-Value="_edit.Email" placeholder="Email" />
+            </div>
+            <div class="col-md-2">
+                <InputNumber class="form-control" @bind-Value="_edit.Year" />
+            </div>
+        </div>
+        <div class="mt-2">
+            <button class="btn btn-primary me-2" type="submit">@(_edit.Id == Guid.Empty ? "Add" : "Update")</button>
+            @if (_edit.Id != Guid.Empty)
+            {
+                <button class="btn btn-secondary" type="button" @onclick="CancelEdit">Cancel</button>
+            }
+        </div>
+        @if (!string.IsNullOrEmpty(_error))
+        {
+            <div class="alert alert-warning mt-2">@_error</div>
+        }
+    </EditForm>
+</div>
 <table class="table table-striped">
     <thead>
         <tr>
